@@ -32,6 +32,7 @@ public class BoxPlotWindow extends JFrame {
 		chart = new BoxPlotChart(sizeMax);
 		setContentPane(chart);
 		this.pack();
+		this.setVisible(true);
 	}
 	
 	public void addItem(List<Double> list, String serie, String type){
