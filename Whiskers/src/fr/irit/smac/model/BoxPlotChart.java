@@ -83,7 +83,7 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 
 	public BoxPlotChart(int sizeMax){
 		super(new BorderLayout());
-		this.delta = sizeMax/10;
+		this.delta = sizeMax/100;
 		this.sliderInitialValue = sizeMax;
 		lastValue = sliderInitialValue;
 		this.chart = createChar();
