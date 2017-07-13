@@ -18,7 +18,7 @@ public class Toolkit {
 		
 		double max = values.get(values.size()-1);
 		double min = values.get(0);
-		if(max < 0)
+		if(max <= 0)
 			max = -min;
 		else
 			if(min < 0){
