@@ -24,6 +24,8 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
+import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.WaferMapPlot;
@@ -140,13 +142,10 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 
 
 	private JFreeChart createChar() {
-		timeSeriesCollection = new TimeSeriesCollection();
-		TimeSeries series = new TimeSeries("Serie");
-		timeSeriesCollection.addSeries(series );
-
 		this.domainAxis = new DateAxis("Time");
 		NumberAxis rangeAxis = new NumberAxis("");
 		XYBoxAndWhiskerRenderer renderer = new XYBoxAndWhiskerRenderer();
+		renderer.setToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
 		XYPlot plot = new XYPlot(getBoxDataset(), domainAxis, rangeAxis, renderer);
 
 		JFreeChart chart = new JFreeChart(
@@ -178,14 +177,15 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	}
 
 	public void addItem(List<Double> list, String serie, String type){
-		d = new Day(new Date());
+		if(d == null)
+			d = new Day(new Date());
 		RegularTimePeriod regularTimePeriod = d.next();
 		List<Double> l = new ArrayList<Double>();
 		l.add(3.0);
 		BoxAndWhiskerItem item = new BoxAndWhiskerItem(
 				list.get(0), list.get(1), list.get(2),
 				list.get(3), list.get(4), list.get(5),
-				null, null, new ArrayList<Double>());
+				list.get(4), list.get(5), list);
 		this.getBoxDataset().add(new Date(), item);
 	}
 

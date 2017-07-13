@@ -16,7 +16,7 @@
 		</javadoc>
 	</target>
     <target name="create_run_jar">
-        <jar destfile="${dir.jarfile}/Links.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${dir.jarfile}/Whiskers.jar" filesetmanifest="mergewithoutmain">
             <!--<manifest>
                 <attribute name="Main-Class" value="Test"/>
                 <attribute name="Class-Path" value="."/>
@@ -25,7 +25,7 @@
             <zipfileset excludes="META-INF/*.SF" src="./libs/jfreechart/jcommon-1.0.17.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="./libs/jfreechart/jfreechart-1.0.14.jar"/>
         </jar>
-        <jar destfile="${dir.jarfile}/Links_without_dependencies.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${dir.jarfile}/Whiskers_without_dependencies.jar" filesetmanifest="mergewithoutmain">
             <!--<manifest>
                 <attribute name="Main-Class" value="Test"/>
                 <attribute name="Class-Path" value="."/>

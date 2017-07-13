@@ -25,15 +25,19 @@ public class Test {
 			map.put("3",new Double(r.nextDouble()));
 			map.put("4",new Double(r.nextDouble()));
 			map.put("5",new Double(r.nextDouble()));
+			map.put("6",new Double(r.nextDouble()));
+			map.put("7",new Double(r.nextDouble()));
+			map.put("8",new Double(r.nextDouble()));
 			list = Toolkit.dataToStat(map);
 			window.addItem(list, "Serie"+i, "type"+i);
 			
 			try {
-				Thread.sleep(200);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 
 		}
 	}
