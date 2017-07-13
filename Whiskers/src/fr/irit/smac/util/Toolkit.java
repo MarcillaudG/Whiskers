@@ -16,7 +16,16 @@ public class Toolkit {
 		}
 		Collections.sort(values);
 		
-		double max = values.get(values.size()-1); 
+		double max = values.get(values.size()-1);
+		double min = values.get(0);
+		if(max < 0)
+			max = -min;
+		else
+			if(min < 0){
+				min = -min;
+				if(min > max)
+					max = min;
+			}
 		// Calcul of the mean value
 		ret.add(Toolkit.mean(values)/max);
 		
