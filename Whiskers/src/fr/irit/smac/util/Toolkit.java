@@ -16,23 +16,24 @@ public class Toolkit {
 		}
 		Collections.sort(values);
 		
+		double max = values.get(values.size()-1); 
 		// Calcul of the mean value
-		ret.add(Toolkit.mean(values));
+		ret.add(Toolkit.mean(values)/max);
 		
 		// Calcul of the median value
-		ret.add(Toolkit.median(values));
+		ret.add(Toolkit.median(values)/max);
 		
 		// Calcul of the first quartile
-		ret.add(Toolkit.firstQuartile(values));
+		ret.add(Toolkit.firstQuartile(values)/max);
 		
 		// Calcul of the third quartil
-		ret.add(Toolkit.thirdQuartile(values));
+		ret.add(Toolkit.thirdQuartile(values)/max);
 		
 		// The min value
-		ret.add(values.get(0));
+		ret.add(values.get(0)/max);
 		
 		// The max value
-		ret.add(values.get(values.size()-1));
+		ret.add(values.get(values.size()-1)/max);
 		
 		
 		return ret;
