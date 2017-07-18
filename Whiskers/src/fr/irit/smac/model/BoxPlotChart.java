@@ -52,6 +52,8 @@ import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 import fr.irit.smac.ui.EntityVizFrame;
@@ -74,6 +76,10 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	private TranslatingBoxDataset dataset;
 
 	private Day d ;
+	
+	private XYSeries series;
+	
+	private XYSeriesCollection collection;
 
 	private int sliderInitialValue;
 	private DateAxis domainAxis;
@@ -175,7 +181,19 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 
 		return boxDataset;
 	}
-
+	
+	private XYSeriesCollection getXYDataset(){
+		if(this.collection == null)
+			this.collection = new XYSeriesCollection();
+		return this.collection;
+	}
+	
+	/**
+	 * Add an item to the chart
+	 * @param list
+	 * @param serie
+	 * @param type
+	 */
 	public void addItem(List<Double> list, String serie, String type){
 		if(d == null)
 			d = new Day(new Date());
@@ -187,6 +205,28 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 				list.get(3), list.get(4), list.get(5),
 				list.get(4), list.get(5), list);
 		this.getBoxDataset().add(new Date(), item);
+	}
+	
+	/**
+	 * Add an item to the chart
+	 * @param list
+	 * @param serie
+	 * @param type
+	 */
+	public void addItem(List<Double> list, String serie, String type,Date date){
+		if(d == null)
+			d = new Day(new Date());
+		RegularTimePeriod regularTimePeriod = d.next();
+		List<Double> l = new ArrayList<Double>();
+		l.add(3.0);
+		BoxAndWhiskerItem item = new BoxAndWhiskerItem(
+				list.get(0), list.get(1), list.get(2),
+				list.get(3), list.get(4), list.get(5),
+				list.get(4), list.get(5), list);
+		this.getBoxDataset().add(date, item);
+	}
+	
+	public void addPoint(double value, Date date){
 	}
 
 	public JFreeChart getChart(){
