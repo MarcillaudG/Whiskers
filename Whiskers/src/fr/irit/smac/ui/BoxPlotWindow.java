@@ -44,4 +44,8 @@ public class BoxPlotWindow extends JFrame {
 		this.chart.addItem(list, serie, type,d,number);
 	}
 
+	public void addItem(Double point, String serie, String type,Date d,int number){
+		this.chart.addItem(point, serie, type,d,number);
+	}
+
 }

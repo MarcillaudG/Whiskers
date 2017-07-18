@@ -63,6 +63,8 @@ public class Test {
 			map.put("8",new Double(-1000*r.nextDouble()));
 			list2 = Toolkit.dataToStat(map);
 			window.addItem(list2, "Serie2", "type",d1,1);
+
+			window.addItem(100*r.nextDouble(), "Serie3", "type",d1,1);
 			
 			try {
 				Thread.sleep(1000);

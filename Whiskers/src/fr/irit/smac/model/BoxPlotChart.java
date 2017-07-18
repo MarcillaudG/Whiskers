@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -57,6 +59,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 import fr.irit.smac.ui.EntityVizFrame;
+import fr.irit.smac.util.Toolkit;
 
 public class BoxPlotChart extends JPanel implements ChangeListener{
 
@@ -80,6 +83,8 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	private XYSeries series;
 	
 	private XYSeriesCollection collection;
+	
+	private Map<String,List<Double>> datas;
 
 	private int sliderInitialValue;
 	private DateAxis domainAxis;
@@ -91,6 +96,7 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 
 	public BoxPlotChart(int sizeMax){
 		super(new BorderLayout());
+		datas = new HashMap<String,List<Double>>();
 		this.delta = sizeMax/100;
 		this.sliderInitialValue = sizeMax;
 		lastValue = sliderInitialValue;
@@ -213,6 +219,26 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	 * @param type
 	 */
 	public void addItem(List<Double> list, String serie, String type,Date date,int number){
+		BoxAndWhiskerItem item = new BoxAndWhiskerItem(
+				list.get(0), list.get(1), list.get(2),
+				list.get(3), list.get(4), list.get(5),
+				list.get(4), list.get(5), list);
+		DefaultBoxAndWhiskerXYDataset test = new DefaultBoxAndWhiskerXYDataset(serie);
+		test.add(date, item);
+		this.chart.getXYPlot().setDataset(number,test);
+	}
+	
+	/**
+	 * Add an item to the chart
+	 * @param list
+	 * @param serie
+	 * @param type
+	 */
+	public void addItem(Double point, String serie, String type,Date date,int number){
+		if(this.datas.get(serie) == null)
+			this.datas.put(serie,new ArrayList<Double>());
+		this.datas.get(serie).add(point);
+		List<Double> list = Toolkit.dataToStat(serie,datas);
 		BoxAndWhiskerItem item = new BoxAndWhiskerItem(
 				list.get(0), list.get(1), list.get(2),
 				list.get(3), list.get(4), list.get(5),
