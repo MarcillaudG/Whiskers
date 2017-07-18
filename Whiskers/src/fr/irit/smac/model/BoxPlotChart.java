@@ -153,7 +153,6 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 		XYBoxAndWhiskerRenderer renderer = new XYBoxAndWhiskerRenderer();
 		renderer.setToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
 		XYPlot plot = new XYPlot(getBoxDataset(), domainAxis, rangeAxis, renderer);
-
 		JFreeChart chart = new JFreeChart(
 				"Box chart", 
 				JFreeChart.DEFAULT_TITLE_FONT,
@@ -213,17 +212,14 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	 * @param serie
 	 * @param type
 	 */
-	public void addItem(List<Double> list, String serie, String type,Date date){
-		if(d == null)
-			d = new Day(new Date());
-		RegularTimePeriod regularTimePeriod = d.next();
-		List<Double> l = new ArrayList<Double>();
-		l.add(3.0);
+	public void addItem(List<Double> list, String serie, String type,Date date,int number){
 		BoxAndWhiskerItem item = new BoxAndWhiskerItem(
 				list.get(0), list.get(1), list.get(2),
 				list.get(3), list.get(4), list.get(5),
 				list.get(4), list.get(5), list);
-		this.getBoxDataset().add(date, item);
+		DefaultBoxAndWhiskerXYDataset test = new DefaultBoxAndWhiskerXYDataset(serie);
+		test.add(date, item);
+		this.chart.getXYPlot().setDataset(number,test);
 	}
 	
 	public void addPoint(double value, Date date){

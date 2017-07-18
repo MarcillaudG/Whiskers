@@ -2,6 +2,7 @@ package fr.irit.smac.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -37,6 +38,10 @@ public class BoxPlotWindow extends JFrame {
 	
 	public void addItem(List<Double> list, String serie, String type){
 		this.chart.addItem(list, serie, type);
+	}
+
+	public void addItem(List<Double> list, String serie, String type,Date d,int number){
+		this.chart.addItem(list, serie, type,d,number);
 	}
 
 }
