@@ -36,6 +36,7 @@ import org.jfree.chart.renderer.WaferMapRenderer;
 import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYBoxAndWhiskerRenderer;
+import org.jfree.chart.renderer.xy.XYDotRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -53,6 +54,8 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.TimeSeriesDataItem;
+import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -92,11 +95,14 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	// one month (milliseconds, seconds, minutes, hours, days)
 	private int delta = 10000000  ;
 	private TimeSeriesCollection timeSeriesCollection;
+	
+	private List<String> listSeries;
 
 
 	public BoxPlotChart(int sizeMax){
 		super(new BorderLayout());
 		datas = new HashMap<String,List<Double>>();
+		listSeries = new ArrayList<String>();
 		this.delta = sizeMax/100;
 		this.sliderInitialValue = sizeMax;
 		lastValue = sliderInitialValue;
@@ -156,7 +162,8 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	private JFreeChart createChar() {
 		this.domainAxis = new DateAxis("Time");
 		NumberAxis rangeAxis = new NumberAxis("");
-		XYBoxAndWhiskerRenderer renderer = new XYBoxAndWhiskerRenderer();
+		XYBoxAndWhiskerRenderer renderer = new XYBoxAndWhiskerRenderer(50);
+		XYItemRenderer renderer2 = new XYDotRenderer();
 		renderer.setToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
 		XYPlot plot = new XYPlot(getBoxDataset(), domainAxis, rangeAxis, renderer);
 		JFreeChart chart = new JFreeChart(
@@ -246,9 +253,12 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 		DefaultBoxAndWhiskerXYDataset test = new DefaultBoxAndWhiskerXYDataset(serie);
 		test.add(date, item);
 		this.chart.getXYPlot().setDataset(number,test);
+		this.chart.getXYPlot().setRenderer(number,new XYBoxAndWhiskerRenderer());
 	}
 	
-	public void addPoint(double value, Date date){
+	public void addPoint(double value, Date date,String serie){
+		Day day = new Day(date);
+		this.getSerie(serie).addOrUpdate(new TimeSeriesDataItem(day, value));
 	}
 
 	public JFreeChart getChart(){
@@ -256,7 +266,17 @@ public class BoxPlotChart extends JPanel implements ChangeListener{
 	}
 
 	public TimeSeries getSerie(String s){
+		if(!this.listSeries.contains(s)){
+			getCollection().addSeries(new TimeSeries(s));
+			this.listSeries.add(s);
+		}
 		return this.timeSeriesCollection.getSeries(s);
+	}
+	
+	public TimeSeriesCollection getCollection(){
+		if(timeSeriesCollection == null)
+			this.timeSeriesCollection = new TimeSeriesCollection();
+		return this.timeSeriesCollection;
 	}
 
 	@Override

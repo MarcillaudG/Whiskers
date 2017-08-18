@@ -13,10 +13,10 @@ import fr.irit.smac.util.Toolkit;
 public class Test {
 
 	public static void main(String[] args) {
-		
+
 		BoxPlotWindow window = new BoxPlotWindow(1000);
-		
-		
+
+
 		Map<String,Double> map = new HashMap<String,Double>();
 		Random r = new Random();
 		Date d = new Date();
@@ -27,6 +27,13 @@ public class Test {
 			e.printStackTrace();
 		}
 		Date d1 = new Date();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Date d2 = new Date();
 		List<Double> list1 = new ArrayList<Double>();
 		map.put("1",new Double(-1000*r.nextDouble()));
 		map.put("2",new Double(-1000*r.nextDouble()));
@@ -50,7 +57,7 @@ public class Test {
 			map.put("8",new Double(-1000*r.nextDouble()));
 			list = Toolkit.dataToStat(map);
 			window.addItem(list, "Serie", "type",d,0);
-			
+
 
 			List<Double> list2 = new ArrayList<Double>();
 			map.put("1",new Double(-1000*r.nextDouble()));
@@ -64,18 +71,20 @@ public class Test {
 			list2 = Toolkit.dataToStat(map);
 			window.addItem(list2, "Serie2", "type",d1,1);
 
-			window.addItem(100*r.nextDouble(), "Serie3", "type",d1,1);
-			
+			window.addItem(100*r.nextDouble(), "Serie3", "type",d2,2);
+
+			window.addPoint(-100*r.nextDouble(), d2, "Serie3");
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 
 		}
 	}
-	
+
 
 }
